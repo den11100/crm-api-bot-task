@@ -54,3 +54,73 @@
   "type": "yii\\web\\HttpException"
 }
 ```
+
+
+## Назначение
+
+Для price<br>
+Отправка в wa сообщения:<br>
+К сожалению, заказ не был оплачен вовремя, и выбранное время записи к врачу стало недоступным.<br>
+Вы можете выбрать новое удобное время по ссылке: {url}
+
+## Эндпоинт
+
+**POST** `/api/wa/notification/choose-new-appointment-slot`
+
+## Тело запроса (JSON)
+
+```json
+{
+  "phone": "79991234567",
+  "url": "https://example.com/link/abc123"
+}
+```
+
+## Успешный ответ
+
+Если задача на отправку WA успешно создана:
+
+**HTTP CODE 200 OK**
+
+```json
+{
+    "status": "success",
+    "data": {
+        "bot_task_id": 176428
+    }
+}
+
+```
+
+**HTTP CODE 200 Ошибки**
+```json
+{
+    "status": "fail",
+    "error": "Не переданы обязательные параметры или пустые значения: ...",
+    "code": 10
+}
+
+```
+```json
+{
+    "status": "fail",
+    "error": "Ошибка валидации: ...",
+    "code": 11
+}
+
+```
+
+> + могут приходить Стандартные ошибки HTTP CODE 400, 500
+
+**HTTP 400 BadRequestHttpException**
+
+```json
+{
+    "name": "Bad Request",
+    "message": "Пустое тело запроса",
+    "code": 0,
+    "status": 400,
+    "type": "yii\\web\\BadRequestHttpException"
+}
+```
+
